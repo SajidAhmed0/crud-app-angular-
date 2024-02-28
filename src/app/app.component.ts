@@ -4,6 +4,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { EmpAddEditComponent } from './emp-add-edit/emp-add-edit.component';
 
 
 @Component({
@@ -22,6 +23,10 @@ import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 export class AppComponent {
   title = 'crud-app';
 
-  
+  constructor(private _dialog: MatDialog) {}
+
+  openAddEditEmpForm(){
+    this._dialog.open(EmpAddEditComponent);
+  }
 
 }
