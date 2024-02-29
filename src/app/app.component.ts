@@ -12,6 +12,7 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { DatePipe, CurrencyPipe } from '@angular/common';
+import { CoreService } from './core/core.service';
 
 
 @Component({
@@ -53,7 +54,11 @@ export class AppComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private _dialog: MatDialog, private _empService: EmployeeService) {}
+  constructor(
+    private _dialog: MatDialog, 
+    private _empService: EmployeeService,
+    private _coreServie: CoreService
+    ) {}
 
   openAddEditEmpForm(){
     const dialogRef = this._dialog.open(EmpAddEditComponent);
@@ -93,7 +98,7 @@ export class AppComponent implements OnInit {
   deleteEmployee(id: number) {
     this._empService.deleteEmployee(id).subscribe({
       next: (res) => {
-        alert('Employee deleted');
+        this._coreServie.openSnackBar('Employee deleted', 'done')
         this.getEmployeeList();
       },
       error: console.log

@@ -10,6 +10,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { NgFor } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EmployeeService } from '../services/employee.service';
+import { CoreService } from '../core/core.service';
 
 
 @Component({
@@ -47,7 +48,8 @@ export class EmpAddEditComponent implements OnInit {
       private _fb: FormBuilder, 
       private _empService: EmployeeService, 
       private _dialogRef: MatDialogRef<EmpAddEditComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: any
+      @Inject(MAT_DIALOG_DATA) public data: any,
+      private _coreService: CoreService
     ) {
     this.empForm = this._fb.group({
       firstName: '',
@@ -71,7 +73,7 @@ export class EmpAddEditComponent implements OnInit {
       if(this.data){
         this._empService.updateEmployee(this.data.id, this.empForm.value).subscribe({
           next: (val: any) => {
-            alert("Employee updated successfully");
+            this._coreService.openSnackBar("Employee updated successfully");
             this._dialogRef.close(true);
           },
           error: (err) => {
@@ -81,7 +83,7 @@ export class EmpAddEditComponent implements OnInit {
       }else{
         this._empService.addEmployee(this.empForm.value).subscribe({
           next: (val: any) => {
-            alert("Employee added successfully");
+            this._coreService.openSnackBar("Employee added successfully");
             this._dialogRef.close(true);
           },
           error: (err) => {
