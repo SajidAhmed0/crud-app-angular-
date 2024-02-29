@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -31,7 +31,7 @@ import { EmployeeService } from '../services/employee.service';
   styleUrl: './emp-add-edit.component.scss',
   providers: [EmployeeService]
 })
-export class EmpAddEditComponent {
+export class EmpAddEditComponent implements OnInit {
 
   empForm: FormGroup;
 
@@ -46,7 +46,8 @@ export class EmpAddEditComponent {
   constructor(
       private _fb: FormBuilder, 
       private _empService: EmployeeService, 
-      private _dialogRef: MatDialogRef<EmpAddEditComponent>
+      private _dialogRef: MatDialogRef<EmpAddEditComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: any
     ) {
     this.empForm = this._fb.group({
       firstName: '',
@@ -61,17 +62,33 @@ export class EmpAddEditComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.empForm.patchValue(this.data);
+  }
+
   onFormSubmit() {
     if(this.empForm.valid){
-      this._empService.addEmployee(this.empForm.value).subscribe({
-        next: (val: any) => {
-          alert("Employee added successfully");
-          this._dialogRef.close(true);
-        },
-        error: (err) => {
-          console.error(err);
-        }
-      });
+      if(this.data){
+        this._empService.updateEmployee(this.data.id, this.empForm.value).subscribe({
+          next: (val: any) => {
+            alert("Employee updated successfully");
+            this._dialogRef.close(true);
+          },
+          error: (err) => {
+            console.error(err);
+          }
+        });
+      }else{
+        this._empService.addEmployee(this.empForm.value).subscribe({
+          next: (val: any) => {
+            alert("Employee added successfully");
+            this._dialogRef.close(true);
+          },
+          error: (err) => {
+            console.error(err);
+          }
+        });
+      }
     }
   }
 }
