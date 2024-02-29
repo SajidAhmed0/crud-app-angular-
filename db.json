@@ -28,28 +28,16 @@
   },
   "employees": [
     {
-      "id": "3182",
-      "firstName": "sfs",
-      "lastName": "sdfsf",
-      "email": "sfsfd@fsdf",
-      "dob": "2024-02-04T18:30:00.000Z",
-      "gender": "male",
-      "education": "Graduate",
-      "company": "sfsdf",
-      "experience": 3,
-      "package": 344
-    },
-    {
-      "id": "7ce9",
-      "firstName": "Jhon",
-      "lastName": "Doe",
-      "email": "jhon@gmail.com",
-      "dob": "2016-01-02T18:30:00.000Z",
+      "id": "b38d",
+      "firstName": "th",
+      "lastName": "eg",
+      "email": "ef@wf",
+      "dob": "2024-03-04T18:30:00.000Z",
       "gender": "male",
       "education": "Post Graduate",
-      "company": "Google",
-      "experience": 8,
-      "package": 234
+      "company": "fw",
+      "experience": 4,
+      "package": 4
     }
   ]
 }

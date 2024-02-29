@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -10,8 +10,6 @@ import {MatSelectModule} from '@angular/material/select';
 import { NgFor } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EmployeeService } from '../services/employee.service';
-import { DialogRef } from '@angular/cdk/dialog';
-// import { HttpClientModule } from '@angular/common/http';
 
 
 @Component({
@@ -48,7 +46,7 @@ export class EmpAddEditComponent {
   constructor(
       private _fb: FormBuilder, 
       private _empService: EmployeeService, 
-      private _dialogRef: DialogRef<EmpAddEditComponent>
+      private _dialogRef: MatDialogRef<EmpAddEditComponent>
     ) {
     this.empForm = this._fb.group({
       firstName: '',
@@ -68,7 +66,7 @@ export class EmpAddEditComponent {
       this._empService.addEmployee(this.empForm.value).subscribe({
         next: (val: any) => {
           alert("Employee added successfully");
-          this._dialogRef.close();
+          this._dialogRef.close(true);
         },
         error: (err) => {
           console.error(err);

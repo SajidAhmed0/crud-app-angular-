@@ -56,7 +56,14 @@ export class AppComponent implements OnInit {
   constructor(private _dialog: MatDialog, private _empService: EmployeeService) {}
 
   openAddEditEmpForm(){
-    this._dialog.open(EmpAddEditComponent);
+    const dialogRef = this._dialog.open(EmpAddEditComponent);
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if(val){
+          this.getEmployeeList();
+        }
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -81,5 +88,15 @@ export class AppComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  deleteEmployee(id: number) {
+    this._empService.deleteEmployee(id).subscribe({
+      next: (res) => {
+        alert('Employee deleted');
+        this.getEmployeeList();
+      },
+      error: console.log
+    });
   }
 }
